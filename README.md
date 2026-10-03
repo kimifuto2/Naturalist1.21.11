@@ -29,8 +29,6 @@ Requires **JDK 21**.
 Toolchain: Gradle 9.5.1 · Fabric Loom 1.17.19 · NeoForge moddev 2.0.112 · NeoForge 21.11.38-beta ·
 official Mojang mappings · Fabric Loader 0.19.3 · Fabric API 0.141.5+1.21.11.
 
-Do not put the Fabric and the NeoForge jar in the same `mods` folder.
-
 ## Layout
 
 ```
