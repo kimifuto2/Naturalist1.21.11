@@ -1,0 +1,45 @@
+plugins {
+    id 'fabric-loom' version '1.17.19' apply false
+    id 'net.neoforged.moddev' version '2.0.112' apply false
+}
+
+version = mod_version
+group = mod_group_id
+
+allprojects {
+    repositories {
+        maven {
+            name = 'Fabric'
+            url = 'https://maven.fabricmc.net/'
+        }
+        maven {
+            name = 'Gegy'
+            url = 'https://maven.gegy.dev/releases/'
+        }
+        mavenCentral()
+    }
+}
+
+subprojects {
+    apply plugin: 'java-library'
+
+    version = rootProject.mod_version
+    group = rootProject.mod_group_id
+
+    java {
+        toolchain.languageVersion = JavaLanguageVersion.of(rootProject.java_version)
+        withSourcesJar()
+    }
+
+    tasks.withType(JavaCompile).configureEach {
+        options.encoding = 'UTF-8'
+        options.release = rootProject.java_version.toInteger()
+        options.compilerArgs << '-Xmaxerrs' << '10000'
+    }
+
+    // archivesName already carries mod_id/mod_version/minecraft_version, so the archive
+    // version must stay empty or the jar would be named naturalist-2.0.6-fabric-1.21.11-2.0.6.jar
+    tasks.withType(AbstractArchiveTask).configureEach {
+        archiveVersion = ''
+    }
+}

@@ -1,0 +1,44 @@
+modLoader="javafml"
+loaderVersion="${loader_version_range}"
+license="${mod_license}"
+issueTrackerURL="https://github.com/crispytwig/Naturalist/issues"
+
+[[accessTransformers]]
+file="META-INF/accesstransformer.cfg"
+
+[[mods]]
+modId="${mod_id}"
+version="${mod_version}"
+displayName="${mod_name}"
+iconFile="naturalist.png"
+authors="${mod_authors}"
+description='''${mod_description}'''
+
+# The Field Guide compat mixin config is deliberately NOT listed: that mod has no 1.21.11
+# build, so its sources are excluded from compilation (same as the Fabric module).
+[[mixins]]
+config="naturalist.mixins.json"
+
+[[dependencies.${mod_id}]]
+    modId="neoforge"
+    type="required"
+    versionRange="[${neo_version},)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.${mod_id}]]
+    modId="minecraft"
+    type="required"
+    versionRange="${minecraft_version_range}"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.${mod_id}]]
+    modId="lambdynlights"
+    type="optional"
+    versionRange="[4.0.0,)"
+    ordering="AFTER"
+    side="CLIENT"
+
+[modproperties.${mod_id}."yumi:entrypoints"]
+    "lambdynlights:initializer" = ["com.crispytwig.naturalist.client.compat.LambDynamicLightsCompat"]

@@ -1,0 +1,52 @@
+plugins {
+    id 'java-library'
+    id 'fabric-loom'
+}
+
+base {
+    archivesName = "${mod_id}-${mod_version}-common-${minecraft_version}"
+}
+
+loom {
+    accessWidenerPath = file("src/main/resources/naturalist.accesswidener")
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${minecraft_version}"
+    mappings loom.officialMojangMappings()
+
+    compileOnly "net.fabricmc:sponge-mixin:0.17.3+mixin.0.8.7"
+    compileOnly "io.github.llamalad7:mixinextras-common:0.5.3"
+    compileOnly "org.jetbrains:annotations:24.1.0"
+    compileOnly "org.jspecify:jspecify:1.0.0"
+
+    // Optional compat: LambDynamicLights (1.21.11 build). Guarded at runtime by Services.PLATFORM.isModLoaded.
+    modCompileOnly "dev.lambdaurora.lambdynamiclights:lambdynamiclights-api:4.9.1+1.21.11"
+}
+
+// The Field Guide mod has no 1.21.11 build (it jumps 1.21.1 -> 26.1.2), so its optional
+// compatibility layer cannot be compiled against 1.21.11. It stays in the tree, uncompiled.
+sourceSets.main.java.exclude 'com/crispytwig/naturalist/compat/fieldguide/**'
+
+tasks.named('processResources', ProcessResources) {
+    var expandProps = [
+            'version'                : mod_version,
+            'mod_version'            : mod_version,
+            'mod_id'                 : mod_id,
+            'mod_name'               : mod_name,
+            'mod_license'            : mod_license,
+            'mod_description'        : mod_description,
+            'mod_authors'            : mod_authors,
+            'minecraft_version'      : minecraft_version,
+            'minecraft_version_range': minecraft_version_range,
+            'fabric_loader_version'  : fabric_loader_version,
+            'fabric_api_version'     : fabric_api_version,
+            'java_version'           : java_version
+    ]
+
+    filesMatching(['fabric.mod.json', 'META-INF/neoforge.mods.toml']) {
+        expand expandProps
+    }
+
+    inputs.properties(expandProps)
+}

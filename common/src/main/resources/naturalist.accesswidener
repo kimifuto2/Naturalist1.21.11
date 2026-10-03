@@ -1,0 +1,22 @@
+accessWidener	v2	named
+
+accessible	class	net/minecraft/world/item/CreativeModeTab$Output
+accessible	class	net/minecraft/client/gui/screens/MenuScreens$ScreenConstructor
+
+accessible	method	net/minecraft/world/level/block/TransparentBlock	<init>	(Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;)V
+accessible	method	net/minecraft/world/level/block/IronBarsBlock	<init>	(Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;)V
+accessible	method	net/minecraft/world/level/block/StairBlock	<init>	(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/block/state/BlockBehaviour$Properties;)V
+accessible	class	net/minecraft/world/inventory/MenuType$MenuSupplier
+accessible	method	net/minecraft/world/inventory/MenuType	<init>	(Lnet/minecraft/world/inventory/MenuType$MenuSupplier;Lnet/minecraft/world/flag/FeatureFlagSet;)V
+accessible	field	net/minecraft/world/entity/Entity	wasTouchingWater	Z
+
+# BlockEntityType has a package-private supplier interface and a private constructor in 1.21.11
+# (FabricBlockEntityTypeBuilder exists, but the mod builds the type directly).
+accessible	class	net/minecraft/world/level/block/entity/BlockEntityType$BlockEntitySupplier
+accessible	method	net/minecraft/world/level/block/entity/BlockEntityType	<init>	(Lnet/minecraft/world/level/block/entity/BlockEntityType$BlockEntitySupplier;Ljava/util/Set;)V
+
+# These vanilla registration entry points are private static in 1.21.11; the mod registers
+# through method references (MenuScreens::register and friends), so they must be widened.
+accessible	method	net/minecraft/client/gui/screens/MenuScreens	register	(Lnet/minecraft/world/inventory/MenuType;Lnet/minecraft/client/gui/screens/MenuScreens$ScreenConstructor;)V
+accessible	method	net/minecraft/client/renderer/blockentity/BlockEntityRenderers	register	(Lnet/minecraft/world/level/block/entity/BlockEntityType;Lnet/minecraft/client/renderer/blockentity/BlockEntityRendererProvider;)V
+accessible	method	net/minecraft/world/entity/SpawnPlacements	register	(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/entity/SpawnPlacementType;Lnet/minecraft/world/level/levelgen/Heightmap$Types;Lnet/minecraft/world/entity/SpawnPlacements$SpawnPredicate;)V
